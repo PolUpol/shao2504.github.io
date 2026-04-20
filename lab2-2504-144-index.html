@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>言海书城</title>
+    <style>
+        * {
+            box-sizing: border-box;}
+        body, h1, h2, h3, ul, li, p, table, th, td {
+            margin: 0;
+            padding: 0;}
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #f4f4f4;
+            color: #333;}
+        a { text-decoration: none; color: #333; }
+        ul { list-style: none; }
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;}
+        header {
+            width: 100%;
+            height: 60px;
+            background-color: #2c3e50;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+        .header-content {
+            width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;}
+        .logo {
+            margin-right: 50px;}
+        .logo img {
+            height: 40px; 
+            width: auto;  
+            display: block;}
+        .nav-menu {
+            display: flex;}
+        .nav-menu li {
+            margin-right: 20px;}
+        .nav-menu a {
+            color: white;
+            display: block;
+            padding: 0 10px;
+            transition: background 0.3s;}
+        .nav-menu a:hover {
+            background-color: #34495e;
+            cursor: pointer;}
+        main {
+            width: 1200px;
+            margin: 80px auto 0;
+            overflow: hidden;
+            padding-bottom: 20px;}
+        .col {
+            float: left;
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;}
+        .sidebar-left {
+            width: 200px;
+            position: relative; }
+        .sidebar-left h3 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; margin-bottom: 10px; }
+        .sidebar-left li { padding: 8px 0; border-bottom: 1px dashed #eee; cursor: pointer; }
+        .sidebar-left li:hover { color: #e74c3c; padding-left: 5px; transition: 0.2s; }
+        .main-content {
+            width: 760px;
+            margin-left: 20px;
+            margin-right: 20px;}
+        .book-showcase {
+            width: 100%;
+            height: 220px; 
+            background-color: #ecf0f1;
+            margin-bottom: 20px;
+            display: flex; 
+            justify-content: center;
+            align-items: center;}
+        .book-item {
+            width: 33.33%;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;   
+            height: 100%;
+            box-sizing: border-box;}
+        .book-img {
+            max-width: 100%; 
+            height: auto;    
+            max-height: 160px; 
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .book-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            gap: 10px; 
+            opacity: 0; 
+            visibility: hidden;
+            transition: all 0.3s ease;}
+        .book-overlay p { margin: 0; color: #ffeb3b; font-size: 18px; font-weight: bold; }
+        .book-overlay a { padding: 5px 15px; background: #e74c3c; color: white; border-radius: 4px; font-size: 14px; }
+        .book-overlay a:hover { background: #c0392b; }
+        .book-item:hover .book-overlay {
+            opacity: 1;
+            visibility: visible;}
+        .hot-books h3 { margin-bottom: 15px; border-left: 4px solid #e74c3c; padding-left: 10px; }
+        .hot-item {
+            float: left;
+            width: 31%;
+            margin-right: 3%;
+            margin-bottom: 20px;
+            min-height: 160px; 
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #eee;
+            text-align: center;
+            position: relative;}
+        .hot-item:nth-child(3n) {
+            margin-right: 0;}
+        .hot-item img {
+            height: 100px;
+            width: auto;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+        .hot-item p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            word-break: break-all; }
+        .new-books { clear: both; margin-top: 20px; }
+        .new-books h3 { margin-bottom: 10px; border-left: 4px solid #3498db; padding-left: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f8f8f8; }
+        .sidebar-right {
+            width: 200px;
+            position: fixed;
+            right: 20px;
+            top: 80px;
+            height: 300px;
+            background-color: #fff8e1;
+            border: 1px solid #ffe0b2;
+            z-index: 999;}
+        .promo-content { padding: 15px; text-align: center; }
+        .promo-btn {
+            display: block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: #e74c3c;
+            color: white;
+            cursor: pointer;}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img src="img/title.jpg" alt="网站标志" title="Logo">
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">计算机</a></li>
+                    <li><a href="#">文学</a></li>
+                    <li><a href="#">商业</a></li>
+                    <li><a href="#">个人中心</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="clearfix">
+        <aside class="col sidebar-left">
+            <h3>图书分类</h3>
+            <ul>
+                <li>前端开发</li>
+                <li>后端架构</li>
+                <li>人工智能</li>
+                <li>科幻文学</li>
+                <li>历史传记</li>
+            </ul>
+        </aside>
+        <section class="col main-content">
+            <div class="book-showcase">
+                <div class="book-item">
+                    <img src="img/1.jpg" alt="图书1" class="book-img">
+                    <p>《CSS世界》</p>
+                    <div class="book-overlay">
+                        <p>限时特价：¥39.5</p>
+                        <a href="#">立即购买</a>
+                    </div>
+                </div>
+                <div class="book-item">
+                    <img src="img/2.jpg" alt="图书2" class="book-img">
+                    <p>《Java从入门到精通》</p>
+                    <div class="book-overlay">
+                        <p>限时特价：¥55.0</p>
+                        <a href="#">立即购买</a>
+                    </div>
+                </div>
+                <div class="book-item">
+                    <img src="img/3.jpg" alt="图书3" class="book-img">
+                    <p>《Vue.js前端开发实战》</p>
+                    <div class="book-overlay">
+                        <p>限时特价：¥42.0</p>
+                        <a href="#">立即购买</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hot-books">
+                <h3>热门推荐</h3>
+                <div class="hot-item">
+                    <img src="img/1.jpg" alt="热门1">
+                    <p>《CSS世界》</p>
+                </div>
+                <div class="hot-item">
+                    <img src="img/2.jpg" alt="热门2">
+                    <p>《Java从入门到精通》</p>
+                </div>
+                <div class="hot-item">
+                    <img src="img/3.jpg" alt="热门3">
+                    <p>Vue.js前端开发实战</p>
+                </div>
+                <div class="hot-item">
+                    <img src="img/4.jpg" alt="热门4">
+                    <p>三体</p>
+                </div>
+                <div class="hot-item">
+                    <img src="img/5.jpg" alt="热门5">
+                    <p>明朝那些事儿</p>
+                </div>
+                <div class="hot-item">
+                    <img src="img/6.jpg" alt="热门6">
+                    <p>人工智能导论</p>
+                </div>
+            </div>
+            <div class="new-books">
+                <h3>新书上市</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>书名</th>
+                            <th>作者</th>
+                            <th>价格</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HTML5与CSS3</td>
+                            <td>张三</td>
+                            <td>¥45.00</td>
+                        </tr>
+                        <tr>
+                            <td>Python编程</td>
+                            <td>李四</td>
+                            <td>¥55.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <aside class="col sidebar-right">
+            <h3>促销活动</h3>
+            <div class="promo-content">
+                <p>全场满200减50！</p>
+                <p>仅限本周</p>
+                <div class="promo-btn">立即抢购</div>
+            </div>
+        </aside>
+    </main>
+</body>
+</html>
